@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import PostsDetailsList from "./components/PostsDetailsList";
 import PostsList from "./components/PostsList";
 import { IPost } from "./types/types";
 
@@ -23,7 +24,7 @@ const App = () => {
 
   return (
     <div>
-      
+      <PostsDetailsList />
       <PostsList posts={posts} />
     </div>
   );
