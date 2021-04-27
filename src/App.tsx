@@ -24,7 +24,7 @@ const App = () => {
 
   return (
     <div>
-      <PostsDetailsList />
+      <PostsDetailsList posts={posts} />
       <PostsList posts={posts} />
     </div>
   );

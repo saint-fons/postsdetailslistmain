@@ -1,5 +1,6 @@
 import React from 'react';
 import { DetailsList } from '@fluentui/react';
+import { IPost } from '../types/types';
 
 
   
@@ -37,19 +38,24 @@ import { DetailsList } from '@fluentui/react';
   ]
   
   const columns = [
-    { key: 'column1', name: 'From', fieldName: 'from', minWidth: 100, maxWidth: 300, isResizable: true },
-    { key: 'column2', name: 'To', fieldName: 'to', minWidth: 100, maxWidth: 300, isResizable: true },
-    { key: 'column3', name: 'Amount', fieldName: 'amount', minWidth: 100, maxWidth: 300, isResizable: true },
-    { key: 'column4', name: 'Date', fieldName: 'date', minWidth: 100, maxWidth: 300, isResizable: true },
+    { key: 'column1', name: 'userId', fieldName: 'userId', minWidth: 100, maxWidth: 300, isResizable: true },
+    { key: 'column2', name: 'id', fieldName: 'id', minWidth: 100, maxWidth: 300, isResizable: true },
+    { key: 'column3', name: 'title', fieldName: 'title', minWidth: 100, maxWidth: 300, isResizable: true },
+    { key: 'column4', name: 'body', fieldName: 'body', minWidth: 100, maxWidth: 300, isResizable: true },
   ]
 
 
-const PostsDetailsList = () => {
+  interface PostsListProps {
+    posts: IPost[];
+}
+
+
+const PostsDetailsList:  FC<PostsListProps> = ({posts}) => {
     return (
         <div data-is-scrollable={true}>
       <div>
         <DetailsList
-          items={operations}
+          items={posts}
           columns={columns}
           selectionMode={0}
         />
