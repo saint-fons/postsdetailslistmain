@@ -1,5 +1,5 @@
 import React from 'react';
-import { DetailsList } from '@fluentui/react';
+import { DetailsList, MarqueeSelection, Selection } from '@fluentui/react';
 import { IPost } from '../types/types';
 
   
@@ -37,14 +37,23 @@ import { IPost } from '../types/types';
 
 
 const PostsDetailsList:  FC<PostsListProps> = ({posts}) => {
+
+    const _selection = new Selection({
+      });
+
     return (
         <div data-is-scrollable={true}>
       <div>
+      <MarqueeSelection selection={_selection}>
         <DetailsList
           items={posts}
           columns={columns}
-          selectionMode={0}
+          selectionPreservedOnEmptyClick={true}
+          ariaLabelForSelectionColumn="Toggle selection"
+          ariaLabelForSelectAllCheckbox="Toggle selection for all items"
+          checkButtonAriaLabel="select row"
         />
+        </MarqueeSelection>
       </div>
     </div>
     );
