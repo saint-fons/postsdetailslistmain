@@ -4,3 +4,8 @@ export interface IPost {
     title: String;
     body: string;
 }
+
+
+export interface IDetailsListUserSelection {
+    userId: string;
+  }

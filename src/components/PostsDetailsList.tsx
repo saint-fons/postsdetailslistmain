@@ -1,6 +1,6 @@
 import React from 'react';
 import { DetailsList, MarqueeSelection, Selection } from '@fluentui/react';
-import { IPost } from '../types/types';
+import { IPost, IDetailsListUserSelection } from '../types/types';
 
   
   const columns = [
@@ -39,7 +39,12 @@ import { IPost } from '../types/types';
 const PostsDetailsList:  FC<PostsListProps> = ({posts}) => {
 
     const _selection = new Selection({
+        onselectionchange: () => {console.log("hi")}
       });
+
+      const _onItemInvoked = (userId: IDetailsListUserSelection): void => {
+        alert(`Item invoked: ${userId.userId}`);
+      };
 
     return (
         <div data-is-scrollable={true}>
@@ -52,6 +57,9 @@ const PostsDetailsList:  FC<PostsListProps> = ({posts}) => {
           ariaLabelForSelectionColumn="Toggle selection"
           ariaLabelForSelectAllCheckbox="Toggle selection for all items"
           checkButtonAriaLabel="select row"
+
+          onItemInvoked={_onItemInvoked}
+
         />
         </MarqueeSelection>
       </div>
