@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { IUsers } from "./types/types";
+import axios from "axios";
 
-const UsersDetailsList = () => {
-
-    const [users, setPosts] = useState<IPost[]>([]);
+const PickedUserForm = () => {
+  const [users, setPosts] = useState<IPost[]>([]);
 
   useEffect(() => {
     fetchPosts();
@@ -20,13 +20,7 @@ const UsersDetailsList = () => {
     }
   }
 
-
-
-    return (
-        <div>
-            hi
-        </div>
-    );
+  return <div>hi</div>;
 };
 
-export default UsersDetailsList;
+export default PickedUserForm;

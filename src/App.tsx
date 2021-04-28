@@ -1,8 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import PostsDetailsList from "./components/PostsDetailsList";
-import PostsList from "./components/PostsList";
-import UsersDetailsList from "./components/UsersDetailsList";
+import PostsDetailsList from "./components/Posts/PostsDetailsList";
 import { IPost } from "./types/types";
 
 const App = () => {
@@ -25,9 +23,7 @@ const App = () => {
 
   return (
     <div>
-      {/* < UsersDetailsList /> */}
       <PostsDetailsList posts={posts} />
-      {/* <PostsList posts={posts} /> */}
     </div>
   );
 };
