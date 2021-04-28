@@ -2,6 +2,10 @@ export interface PostsListProps {
     posts: IPost[];
   }
 
+  export interface UserListProps {
+    pickedUser: string
+  }
+
 
 export interface IPost {
     userId: string;

@@ -1,20 +1,15 @@
 import React, { FC, useEffect, useState } from "react";
-import { IUsers } from "./types/types";
 import axios from "axios";
-import { Formik, Field, Form, FormikHelpers } from "formik";
-import { IPickedUser, IPickedUserProps } from "../../types/types";
+import { Formik, Form, FormikHelpers } from "formik";
+import { IPickedUser, UserListProps } from "../../types/types";
 
-interface PostsListProps {
-  user: IPickedUserProps[];
-}
-
-const PickedUserForm: FC<PostsListProps> = ({ pickedUser }) => {
+const PickedUserForm: FC<UserListProps> = ({ pickedUser }) => {
   const [user, setUser] = useState<any[]>([]);
 
   async function fetchPosts(pickedUser) {
     try {
       const response = await axios.get<IPost>(
-        `https://jsonplaceholder.typicode.com/users/${pickedUser.toString()}`
+        `https://jsonplaceholder.typicode.com/users/${pickedUser}`
       );
       setUser(response.data);
     } catch (e) {
@@ -24,12 +19,15 @@ const PickedUserForm: FC<PostsListProps> = ({ pickedUser }) => {
 
   /* Получаем нового пользователя после выбора */
   useEffect(() => {
-    fetchPosts(pickedUser);
+    /* Пропускаем первый вызов */
+    if (Number(pickedUser) === 0) {
+    } else {
+      fetchPosts(pickedUser);
+    }
   }, [pickedUser]);
 
   return (
     <div>
-      <h1>Signup</h1>
       <Formik
         initialValues={{
           name: "",
@@ -61,7 +59,7 @@ const PickedUserForm: FC<PostsListProps> = ({ pickedUser }) => {
             type="email"
           /> */}
 
-          <button type="submit">Submit</button>
+          {/* <button type="submit">Submit</button> */}
         </Form>
       </Formik>
     </div>
