@@ -1,35 +1,36 @@
-import React, { FC } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { DetailsList } from "@fluentui/react";
-import { IPost, IDetailsListUserSelection } from "../../types/types";
+import {
+  IPost,
+  IDetailsListUserSelection,
+  ISetUser,
+  PostsListProps,
+} from "../../types/types";
 import PickedUserForm from "../forms/PickedUserForm";
 import { columns } from "../../styles/columns";
 
-
-interface PostsListProps {
-  posts: IPost[];
-}
-
-
 /* получаем выбранного пользователя */
 const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
-  const pickedUser = (userId: IDetailsListUserSelection): void => {
-    debugger
-    alert(`Item invoked: ${userId.userId}`);
+  /* Сет выбранного пользователя */
+  const [pickedUser, setPickedUser] = useState<ISetUser[]>([]);
+
+  const PickedUser = (user: IDetailsListUserSelection): void => {
+    setPickedUser(user.userId);
   };
 
   return (
     <div data-is-scrollable={true}>
       <div>
-        <PickedUserForm />
-          <DetailsList
-            items={posts}
-            columns={columns}
-            selectionPreservedOnEmptyClick={true}
-            ariaLabelForSelectionColumn="Toggle selection"
-            ariaLabelForSelectAllCheckbox="Toggle selection for all items"
-            checkButtonAriaLabel="select row"
-            onItemInvoked={pickedUser}
-          />
+        <PickedUserForm pickedUser={pickedUser} />
+        <DetailsList
+          items={posts}
+          columns={columns}
+          selectionPreservedOnEmptyClick={true}
+          ariaLabelForSelectionColumn="Toggle selection"
+          ariaLabelForSelectAllCheckbox="Toggle selection for all items"
+          checkButtonAriaLabel="select row"
+          onItemInvoked={PickedUser}
+        />
       </div>
     </div>
   );

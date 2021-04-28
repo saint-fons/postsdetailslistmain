@@ -1,3 +1,8 @@
+export interface PostsListProps {
+    posts: IPost[];
+  }
+
+
 export interface IPost {
     userId: string;
     id: string;
@@ -33,4 +38,17 @@ export interface IDetailsListUserSelection {
     name: string;
     username: string;
     email: string;
+  }
+
+
+  export interface IPickedUserProps {
+    userId: string;
+    id: string;
+    title: String;
+    body: string;
+  }
+
+
+  export interface ISetUser {
+    user: string
   }
