@@ -6,6 +6,23 @@ export interface IPost {
 }
 
 
+export interface IAddress {
+    street: string;
+    suite: string;
+    city: string;
+    zipcode: string;
+}
+
+export interface IUsers {
+    id: string;
+    name: string;
+    username: String;
+    email: string;
+    address: IAddress;
+}
+
+
+
 export interface IDetailsListUserSelection {
     userId: string;
   }
