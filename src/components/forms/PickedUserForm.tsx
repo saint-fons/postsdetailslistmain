@@ -1,26 +1,51 @@
 import React, { useEffect, useState } from "react";
 import { IUsers } from "./types/types";
 import axios from "axios";
+import { Formik, Field, Form, FormikHelpers } from 'formik';
+import { IPickedUser } from "../../types/types";
+
+
 
 const PickedUserForm = () => {
-  const [users, setPosts] = useState<IPost[]>([]);
+  return (
+    <div>
+      <h1>Signup</h1>
+      <Formik
+        initialValues={{
+          name: '',
+          username: '',
+          email: '',
+        }}
+        onSubmit={(
+          values: IPickedUser,
+          { setSubmitting }: FormikHelpers<IPickedUser>
+        ) => {
+          setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+          }, 500);
+        }}
+      >
+        <Form>
+          <label htmlFor="firstName">Name</label>
+          <Field id="name" name="firstName" placeholder="John" />
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+          <label htmlFor="lastName">Username</label>
+          <Field id="username" name="lastName" placeholder="Doe" />
 
-  async function fetchPosts() {
-    try {
-      const response = await axios.get<IPost>(
-        "https://jsonplaceholder.typicode.com/users"
-      );
-      setPosts(response.data);
-    } catch (e) {
-      alert(e);
-    }
-  }
+          <label htmlFor="email">Email</label>
+          <Field
+            id="email"
+            name="email"
+            placeholder="john@acme.com"
+            type="email"
+          />
 
-  return <div>hi</div>;
+          <button type="submit">Submit</button>
+        </Form>
+      </Formik>
+    </div>
+  );
 };
 
 export default PickedUserForm;

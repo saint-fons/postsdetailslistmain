@@ -26,3 +26,11 @@ export interface IUsers {
 export interface IDetailsListUserSelection {
     userId: string;
   }
+
+
+
+  export interface IPickedUser {
+    name: string;
+    username: string;
+    email: string;
+  }
