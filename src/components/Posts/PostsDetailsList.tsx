@@ -1,7 +1,6 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState} from "react";
 import { DetailsList } from "@fluentui/react";
 import {
-  IPost,
   IDetailsListUserSelection,
   ISetUser,
   PostsListProps,
@@ -14,7 +13,7 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
   /* Сет выбранного пользователя */
   const [pickedUser, setPickedUser] = useState<ISetUser[]>([]);
 
-  const PickedUser = (user: IDetailsListUserSelection): void => {
+  const PickedUser = (user: ISetUser): void => {
     setPickedUser(user.userId);
   };
 
