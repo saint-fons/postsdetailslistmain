@@ -7,9 +7,24 @@ import { DefaultButton } from "@fluentui/react/lib/Button";
 import { Dialog } from "@fluentui/react/lib/Dialog";
 import { columns } from "../../styles/columns";
 import { ProgressIndicator } from "@fluentui/react/lib/ProgressIndicator";
+import ReactPaginate from 'react-paginate'
 
 /* получаем выбранного пользователя */
 const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
+
+  const [paginatedPosts, setPagintaionPosts] = useState<any>(posts);
+  const [pageNumber, setPageNumber] = useState<any>(0)
+
+  const postsPerPage = 10
+
+  const pagesVisited = pageNumber * postsPerPage
+
+
+  const displayPosts = paginatedPosts.slice(pagesVisited, pagesVisited + postsPerPage)
+
+
+  debugger
+
   /* Сет выбранного пользователя */
   const [pickedUser, setPickedUser] = useState<ISetUser[]>([]);
 
@@ -46,7 +61,7 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
             onDismiss={toggleHideDialog}
             modalProps={modalProps}
           >
-            {pickedUser.length == 0 ? (
+            {pickedUser.length === 0 ? (
               <div>Пожалуйста, выберите сообщение</div>
             ) : (
               <PickedUserForm pickedUser={pickedUser} />
@@ -64,9 +79,9 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
           checkButtonAriaLabel="select row"
           onItemInvoked={PickedUser}
         />
-        {/* Прелоадер */}
         <div>
-          {posts.length == 0 ? (
+          {/* Прелоадер */}
+          {posts.length === 0 ? (
             <ProgressIndicator label="Loading" />
           ) : undefined}
         </div>
