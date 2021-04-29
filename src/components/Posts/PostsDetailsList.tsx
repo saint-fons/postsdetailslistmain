@@ -2,11 +2,10 @@ import React, { FC, useState } from "react";
 import { DetailsList } from "@fluentui/react";
 import { ISetUser, PostsListProps } from "../../types/types";
 import PickedUserForm from "../forms/PickedUserForm";
-import { columns } from "../../styles/columns";
 import { useId, useBoolean } from "@fluentui/react-hooks";
-import { ContextualMenu } from "@fluentui/react/lib/ContextualMenu";
 import { PrimaryButton, DefaultButton } from "@fluentui/react/lib/Button";
-import { Dialog, DialogType, DialogFooter } from "@fluentui/react/lib/Dialog";
+import { Dialog, DialogFooter } from "@fluentui/react/lib/Dialog";
+import style from "./../../styles/FormUsers.module.css";
 
 /* получаем выбранного пользователя */
 const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
@@ -17,34 +16,11 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
     setPickedUser(user.userId.toString());
   };
 
-
-
   const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
   const [isDraggable, { toggle: toggleIsDraggable }] = useBoolean(false);
   const labelId: string = useId("dialogLabel");
   const subTextId: string = useId("subTextLabel");
 
-  const dialogStyles = { main: { maxWidth: 450 } };
-
-
-
-  const modalProps = React.useMemo(
-    () => ({
-      titleAriaId: labelId,
-      subtitleAriaId: subTextId,
-      isBlocking: false,
-      styles: dialogStyles,
-      dragOptions: isDraggable ? dragOptions : undefined,
-    }),
-    [isDraggable, labelId, subTextId]
-  );
-
-  const dialogContentProps = {
-    type: DialogType.normal,
-    title: "Missing Subject",
-    closeButtonAriaLabel: "Close",
-    subText: "Do you want to send this message without a subject?",
-  };
 
 
   const columns = [
@@ -58,20 +34,11 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
     },
     {
       key: "column2",
-      name: "id",
+      name: "Pick a user",
       fieldName: "id",
       minWidth: 150,
       maxWidth: 150,
       isResizable: true,
-      onRender: () =>{
-        return <div>
-          <DefaultButton
-        secondaryText="Opens the Sample Dialog"
-        onClick={toggleHideDialog}
-        text="Open Dialog"
-      />
-        </div>
-      }
     },
     {
       key: "column3",
@@ -91,27 +58,39 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
     },
   ];
 
-
+  const modalProps = React.useMemo(
+    () => ({
+      titleAriaId: labelId,
+      subtitleAriaId: subTextId,
+      isBlocking: false,
+      styles: style,
+      dragOptions: isDraggable ? dragOptions : undefined,
+    }),
+    [isDraggable, labelId, subTextId]
+  );
 
   return (
     <div data-is-scrollable={true}>
       <div>
-      <DefaultButton
-        secondaryText="Opens the Sample Dialog"
-        onClick={toggleHideDialog}
-        text="Open Dialog"
-      />
-
-      <Dialog
-        hidden={hideDialog}
-        onDismiss={toggleHideDialog}
-        dialogContentProps={dialogContentProps}
-        modalProps={modalProps}
-        pickedUser={pickedUser}
-      />
+        <div>
+          <DefaultButton
+            secondaryText="Open Profile"
+            onClick={toggleHideDialog}
+            text="Open Profile"
+          />
+        </div>
+        <>
+          <Dialog
+            hidden={hideDialog}
+            onDismiss={toggleHideDialog}
+            modalProps={modalProps}
+            pickedUser={pickedUser}
+          >
+            <PickedUserForm pickedUser={pickedUser} />
+          </Dialog>
+        </>
       </div>
       <div>
-        <PickedUserForm pickedUser={pickedUser} />
         <DetailsList
           items={posts}
           columns={columns}
