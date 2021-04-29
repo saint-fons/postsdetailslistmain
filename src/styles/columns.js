@@ -8,15 +8,6 @@ export const columns = [
       minWidth: 50,
       maxWidth: 50,
       isResizable: true,
-      onRender: () =>{
-        return <div>
-          <DefaultButton
-        secondaryText="Opens the Sample Dialog"
-        onClick={toggleHideDialog}
-        text="Open Dialog"
-      />
-        </div>
-      }
     },
     {
       key: "column2",
