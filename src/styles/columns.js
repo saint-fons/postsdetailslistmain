@@ -3,23 +3,15 @@
 export const columns = [
     {
       key: "column1",
-      name: "userId",
+      name: "ID пользователя",
       fieldName: "userId",
-      minWidth: 50,
-      maxWidth: 50,
-      isResizable: true,
-    },
-    {
-      key: "column2",
-      name: "id",
-      fieldName: "id",
-      minWidth: 50,
-      maxWidth: 50,
+      minWidth: 120,
+      maxWidth: 120,
       isResizable: true,
     },
     {
       key: "column3",
-      name: "title",
+      name: "Заголовок",
       fieldName: "title",
       minWidth: 200,
       maxWidth: 300,
@@ -27,7 +19,7 @@ export const columns = [
     },
     {
       key: "column4",
-      name: "body",
+      name: "Сообщение",
       fieldName: "body",
       minWidth: 100,
       maxWidth: 300,

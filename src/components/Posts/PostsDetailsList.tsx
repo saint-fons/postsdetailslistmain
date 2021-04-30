@@ -12,7 +12,6 @@ import style from "../../styles/ProfileStyle.module.css";
 
 /* получаем выбранного пользователя */
 const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
-
   const postsPerPage = 10;
 
   const pageCount = Math.ceil(posts.length / postsPerPage);
@@ -23,9 +22,9 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
 
   const displayPosts = posts.slice(pagesVisited, pagesVisited + postsPerPage);
 
-  const changePage = ({selected}) => {
-    setPageNumber(selected)
-  }
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
+  };
 
   /* Сет выбранного пользователя */
   const [pickedUser, setPickedUser] = useState<ISetUser[]>([]);
@@ -48,59 +47,60 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
   );
 
   return (
-    <div data-is-scrollable={true}>
-      <div>
-        <div>
-          <DefaultButton
-            secondaryText="Open Profile"
-            onClick={toggleHideDialog}
-            text="Open Profile"
-          />
+    <div>
+      {/* Прелоадер */}
+      {posts.length === 0 ? (
+        <ProgressIndicator label="Loading" />
+      ) : (
+        <div data-is-scrollable={true}>
+          <div>
+            <div>
+              <DefaultButton
+                secondaryText="Открыть профиль"
+                onClick={toggleHideDialog}
+                text="Открыть профиль"
+              />
+            </div>
+            <>
+              <Dialog
+                hidden={hideDialog}
+                onDismiss={toggleHideDialog}
+                modalProps={modalProps}
+              >
+                {pickedUser.length === 0 ? (
+                  <div>Пожалуйста, выберите сообщение</div>
+                ) : (
+                  <PickedUserForm pickedUser={pickedUser} />
+                )}
+              </Dialog>
+            </>
+          </div>
+          <div>
+            <DetailsList
+              items={displayPosts}
+              columns={columns}
+              selectionPreservedOnEmptyClick={true}
+              ariaLabelForSelectionColumn="Toggle selection"
+              ariaLabelForSelectAllCheckbox="Toggle selection for all items"
+              checkButtonAriaLabel="select row"
+              onItemInvoked={PickedUser}
+            />
+            <div>
+              <ReactPaginate
+                previousLabel={"Previous"}
+                netLabel={"Next"}
+                pageCount={pageCount}
+                onPageChange={changePage}
+                containerClassName={style.paginationBttns}
+                previousLinkClassName={"previousBttn"}
+                nextLinkClassname={"nextBttn"}
+                disableClassname={"paginationDisabled"}
+                activeClassName={"paginationActive"}
+              />
+            </div>
+          </div>
         </div>
-        <>
-          <Dialog
-            hidden={hideDialog}
-            onDismiss={toggleHideDialog}
-            modalProps={modalProps}
-          >
-            {pickedUser.length === 0 ? (
-              <div>Пожалуйста, выберите сообщение</div>
-            ) : (
-              <PickedUserForm pickedUser={pickedUser} />
-            )}
-          </Dialog>
-        </>
-      </div>
-      <div>
-        <DetailsList
-          items={displayPosts}
-          columns={columns}
-          selectionPreservedOnEmptyClick={true}
-          ariaLabelForSelectionColumn="Toggle selection"
-          ariaLabelForSelectAllCheckbox="Toggle selection for all items"
-          checkButtonAriaLabel="select row"
-          onItemInvoked={PickedUser}
-        />
-        <div>
-          {/* Прелоадер */}
-          {posts.length === 0 ? (
-            <ProgressIndicator label="Loading" />
-          ) : undefined}
-        </div>
-        <div>
-          <ReactPaginate
-            previousLabel={"Previous"}
-            netLabel={"Next"}
-            pageCount={pageCount}
-            onPageChange={changePage}
-            containerClassName={style.paginationBttns}
-            previousLinkClassName={"previousBttn"}
-            nextLinkClassname={"nextBttn"}
-            disableClassname={"paginationDisabled"}
-            activeClassName={"paginationActive"}
-          />
-        </div>
-      </div>
+      )}
     </div>
   );
 };
