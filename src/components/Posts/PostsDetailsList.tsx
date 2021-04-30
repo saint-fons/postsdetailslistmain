@@ -12,10 +12,10 @@ import "./../../styles/TabsPostsStyle.css";
 import style from "../../styles/ProfileStyle.module.css";
 import { Line } from "react-chartjs-2";
 import axios from "axios";
+import { XYPlot, XAxis, YAxis, VerticalRectSeries, Highlight } from "react-vis";
 
 /* получаем выбранного пользователя */
 const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
-
   const postsPerPage = 10;
 
   const pageCount = Math.ceil(posts.length / postsPerPage);
@@ -50,10 +50,7 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
     [labelId, subTextId]
   );
 
-
-/* *************** Второй таб ***********************/
-
-
+  /* *************** Второй таб ***********************/
 
   const [toggleState, setToggleState] = useState(1);
 
@@ -65,12 +62,12 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
   const [employeeSalary, setEmployeeSalary] = useState([]);
   const [employeeAge, setEmployeeAge] = useState([]);
 
-
   const chart = () => {
     let empSal = [];
     let empAge = [];
-    axios.get("http://dummy.restapiexample.com/api/v1/employees")
-      .then(res => {
+    axios
+      .get("http://dummy.restapiexample.com/api/v1/employees")
+      .then((res) => {
         console.log(res);
         for (const dataObj of res.data.data) {
           empSal.push(parseInt(dataObj.employee_salary));
@@ -83,12 +80,12 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
               label: "level of thiccness",
               data: empSal,
               backgroundColor: ["rgba(75, 192, 192, 0.6)"],
-              borderWidth: 4
-            }
-          ]
+              borderWidth: 4,
+            },
+          ],
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
     console.log(empSal, empAge);
@@ -98,9 +95,26 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
     chart();
   }, []);
 
+  /* Считаем посты в которых айдишки делятся на 3 и на 7 */
 
+  useEffect(() => {
+      let idDividedBy3 = 0;
+      if (posts !== undefined && posts !== null) {
+        debugger
+        for (let i = 0; i <= posts.length; i++) {
+          console.log(posts[i].id);
+          debugger
+        }
+      }
+  }, []);
 
+  debugger;
 
+  const DATA = [
+    { x0: 0, x: 1, y: 1 },
+    { x0: 1, x: 2, y: 2 },
+    { x0: 2, x: 3, y: 10 },
+  ];
 
   return (
     <div>
@@ -126,7 +140,6 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
               Tab 3
             </button>
           </div>
-
           <div className="content-tabs">
             <div
               className={
@@ -195,36 +208,36 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
               }
             >
               <div>
-              <div>
-                <Line
-                  data={chartData}
-                  options={{
-                    responsive: true,
-                    title: { text: "THICCNESS SCALE", display: true },
-                    scales: {
-                      yAxes: [
-                        {
-                          ticks: {
-                            autoSkip: true,
-                            maxTicksLimit: 10,
-                            beginAtZero: true,
+                <div>
+                  <Line
+                    data={chartData}
+                    options={{
+                      responsive: true,
+                      title: { text: "THICCNESS SCALE", display: true },
+                      scales: {
+                        yAxes: [
+                          {
+                            ticks: {
+                              autoSkip: true,
+                              maxTicksLimit: 10,
+                              beginAtZero: true,
+                            },
+                            gridLines: {
+                              display: false,
+                            },
                           },
-                          gridLines: {
-                            display: false,
+                        ],
+                        xAxes: [
+                          {
+                            gridLines: {
+                              display: false,
+                            },
                           },
-                        },
-                      ],
-                      xAxes: [
-                        {
-                          gridLines: {
-                            display: false,
-                          },
-                        },
-                      ],
-                    },
-                  }}
-                />
-              </div>
+                        ],
+                      },
+                    }}
+                  />
+                </div>
               </div>
             </div>
 
@@ -233,16 +246,19 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
                 toggleState === 3 ? "content  active-content" : "content"
               }
             >
-              <h2>Content 3</h2>
-              <hr />
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos
-                sed nostrum rerum laudantium totam unde adipisci incidunt modi
-                alias! Accusamus in quia odit aspernatur provident et ad vel
-                distinctio recusandae totam quidem repudiandae omnis veritatis
-                nostrum laboriosam architecto optio rem, dignissimos voluptatum
-                beatae aperiam voluptatem atque. Beatae rerum dolores sunt.
-              </p>
+              <div>
+                <XYPlot width={1000} height={500} margin={150}>
+                  <XAxis />
+                  <YAxis />
+                  <VerticalRectSeries
+                    data={DATA}
+                    stroke="white"
+                    colorType="literal"
+                  />
+
+                  <Highlight color="#829AE3" drag enableY={false} />
+                </XYPlot>
+              </div>
             </div>
           </div>
         </div>
