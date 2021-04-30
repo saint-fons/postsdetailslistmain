@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { DetailsList } from "@fluentui/react";
 import { ISetUser, PostsListProps } from "../../types/types";
 import PickedUserForm from "../forms/PickedUserForm";
@@ -8,11 +8,14 @@ import { Dialog } from "@fluentui/react/lib/Dialog";
 import { columns } from "../../styles/columns";
 import { ProgressIndicator } from "@fluentui/react/lib/ProgressIndicator";
 import ReactPaginate from "react-paginate";
-import "./../../styles/TabsPostsStyle.css"
+import "./../../styles/TabsPostsStyle.css";
 import style from "../../styles/ProfileStyle.module.css";
+import { Line } from "react-chartjs-2";
+import axios from "axios";
 
 /* получаем выбранного пользователя */
 const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
+
   const postsPerPage = 10;
 
   const pageCount = Math.ceil(posts.length / postsPerPage);
@@ -47,13 +50,57 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
     [labelId, subTextId]
   );
 
-  /* Табы */
+
+/* *************** Второй таб ***********************/
+
+
 
   const [toggleState, setToggleState] = useState(1);
 
   const toggleTab = (index) => {
     setToggleState(index);
   };
+
+  const [chartData, setChartData] = useState({});
+  const [employeeSalary, setEmployeeSalary] = useState([]);
+  const [employeeAge, setEmployeeAge] = useState([]);
+
+
+  const chart = () => {
+    let empSal = [];
+    let empAge = [];
+    axios.get("http://dummy.restapiexample.com/api/v1/employees")
+      .then(res => {
+        console.log(res);
+        for (const dataObj of res.data.data) {
+          empSal.push(parseInt(dataObj.employee_salary));
+          empAge.push(parseInt(dataObj.employee_age));
+        }
+        setChartData({
+          labels: empAge,
+          datasets: [
+            {
+              label: "level of thiccness",
+              data: empSal,
+              backgroundColor: ["rgba(75, 192, 192, 0.6)"],
+              borderWidth: 4
+            }
+          ]
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    console.log(empSal, empAge);
+  };
+
+  useEffect(() => {
+    chart();
+  }, []);
+
+
+
+
 
   return (
     <div>
@@ -64,13 +111,13 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
               className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
               onClick={() => toggleTab(1)}
             >
-              Tab 1
+              Посты
             </button>
             <button
               className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
               onClick={() => toggleTab(2)}
             >
-              Tab 2
+              Графики
             </button>
             <button
               className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
@@ -147,12 +194,38 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
                 toggleState === 2 ? "content  active-content" : "content"
               }
             >
-              <h2>Content 2</h2>
-              <hr />
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Sapiente voluptatum qui adipisci.
-              </p>
+              <div>
+              <div>
+                <Line
+                  data={chartData}
+                  options={{
+                    responsive: true,
+                    title: { text: "THICCNESS SCALE", display: true },
+                    scales: {
+                      yAxes: [
+                        {
+                          ticks: {
+                            autoSkip: true,
+                            maxTicksLimit: 10,
+                            beginAtZero: true,
+                          },
+                          gridLines: {
+                            display: false,
+                          },
+                        },
+                      ],
+                      xAxes: [
+                        {
+                          gridLines: {
+                            display: false,
+                          },
+                        },
+                      ],
+                    },
+                  }}
+                />
+              </div>
+              </div>
             </div>
 
             <div
