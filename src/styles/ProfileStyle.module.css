@@ -1,48 +1,56 @@
-.container__modal{
-    width: 500px;
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    height: 500px;
+.container__modal {
+  width: 500px;
+
+  height: 500px;
 }
 
 .container {
-    min-width: 150px;
-    max-height: 150px;
+  min-width: 150px;
+  max-height: 150px;
 
-    margin-top: 0;
+  margin-top: 0;
 
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .container__form {
-    min-width: 150px;
-    max-height: 150px;
+  min-width: 150px;
+  max-height: 150px;
 
-    margin-top: 0;
+  margin-top: 0;
 
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .container__users {
-    line-height: 1.7em;
+  line-height: 1.7em;
 }
 
 .paginationBttns {
-    font-size: 12px;
+  font-size: 12px;
 
-    width: 80%;
-    height: 30px;
-    margin-top: 17px;
+  width: 80%;
+  height: 30px;
+  margin-top: 17px;
 
-    list-style: none;
-    display: flex;
-    justify-content: center;
+  list-style: none;
+  display: flex;
+  justify-content: center;
 }
 
 .paginationBttns a {
-    padding: 10px;
-    margin: 8px;
-    border-radius: 3px;
-    border: 0.3px solid rgb(96, 94, 92);
-    color: rgb(96, 94, 92);
-    cursor: pointer;
+  padding: 10px;
+  margin: 8px;
+  border-radius: 3px;
+  border: 0.3px solid rgb(96, 94, 92);
+  color: rgb(96, 94, 92);
+  cursor: pointer;
 }
