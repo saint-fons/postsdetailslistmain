@@ -7,23 +7,25 @@ import { DefaultButton } from "@fluentui/react/lib/Button";
 import { Dialog } from "@fluentui/react/lib/Dialog";
 import { columns } from "../../styles/columns";
 import { ProgressIndicator } from "@fluentui/react/lib/ProgressIndicator";
-import ReactPaginate from 'react-paginate'
+import ReactPaginate from "react-paginate";
+import style from "../../styles/ProfileStyle.module.css";
 
 /* получаем выбранного пользователя */
 const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
 
-  const [paginatedPosts, setPagintaionPosts] = useState<any>(posts);
-  const [pageNumber, setPageNumber] = useState<any>(0)
+  const postsPerPage = 10;
 
-  const postsPerPage = 10
+  const pageCount = Math.ceil(posts.length / postsPerPage);
 
-  const pagesVisited = pageNumber * postsPerPage
+  const [pageNumber, setPageNumber] = useState<any>(0);
 
+  const pagesVisited = pageNumber * postsPerPage;
 
-  const displayPosts = paginatedPosts.slice(pagesVisited, pagesVisited + postsPerPage)
+  const displayPosts = posts.slice(pagesVisited, pagesVisited + postsPerPage);
 
-
-  debugger
+  const changePage = ({selected}) => {
+    setPageNumber(selected)
+  }
 
   /* Сет выбранного пользователя */
   const [pickedUser, setPickedUser] = useState<ISetUser[]>([]);
@@ -71,7 +73,7 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
       </div>
       <div>
         <DetailsList
-          items={posts}
+          items={displayPosts}
           columns={columns}
           selectionPreservedOnEmptyClick={true}
           ariaLabelForSelectionColumn="Toggle selection"
@@ -84,6 +86,19 @@ const PostsDetailsList: FC<PostsListProps> = ({ posts }) => {
           {posts.length === 0 ? (
             <ProgressIndicator label="Loading" />
           ) : undefined}
+        </div>
+        <div>
+          <ReactPaginate
+            previousLabel={"Previous"}
+            netLabel={"Next"}
+            pageCount={pageCount}
+            onPageChange={changePage}
+            containerClassName={style.paginationBttns}
+            previousLinkClassName={"previousBttn"}
+            nextLinkClassname={"nextBttn"}
+            disableClassname={"paginationDisabled"}
+            activeClassName={"paginationActive"}
+          />
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import axios from "axios";
 import { Formik, Field, Form, FormikHelpers } from "formik";
 import { IPickedUser, UserListProps } from "../../types/types";
-import style from "../../styles/FormUsers.module.css";
+import style from "../../styles/ProfileStyle.module.css";
 
 const PickedUserForm: FC<UserListProps> = ({ pickedUser }) => {
   const [user, setUser] = useState<any[]>([]);
